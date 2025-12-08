@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home, Code, Bot, Palette, Sparkles, Menu, X } from "lucide-react";
@@ -33,17 +33,55 @@ const navItems = [
 
 export default function FloatingNav() {
   const pathname = usePathname();
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const lastScrollY = useRef(0);
+  const ticking = useRef(false);
 
-  // Track scroll for subtle shadow effect
+  // Smooth opacity animation
+  const opacity = useMotionValue(1);
+  const smoothOpacity = useSpring(opacity, { stiffness: 300, damping: 30 });
+  
+  // Smooth Y position animation
+  const y = useMotionValue(0);
+  const smoothY = useSpring(y, { stiffness: 300, damping: 30 });
+
+  // Track scroll direction for hide/show
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      if (!ticking.current) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
+          
+          // Always show at top of page
+          if (currentScrollY < 50) {
+            setIsVisible(true);
+            opacity.set(1);
+            y.set(0);
+          } 
+          // Scrolling down - hide navbar
+          else if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
+            setIsVisible(false);
+            opacity.set(0);
+            y.set(-20);
+          } 
+          // Scrolling up - show navbar
+          else if (currentScrollY < lastScrollY.current) {
+            setIsVisible(true);
+            opacity.set(1);
+            y.set(0);
+          }
+          
+          lastScrollY.current = currentScrollY;
+          ticking.current = false;
+        });
+        ticking.current = true;
+      }
     };
-    window.addEventListener("scroll", handleScroll);
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [opacity, y]);
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -52,16 +90,21 @@ export default function FloatingNav() {
 
   return (
     <>
-      {/* Desktop Navigation */}
+      {/* Desktop Navigation - Centered */}
       <motion.nav
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, type: "spring", stiffness: 100, damping: 20 }}
+        style={{ 
+          opacity: smoothOpacity,
+          y: smoothY,
+        }}
         className={cn(
-          "fixed top-6 left-1/2 -translate-x-1/2 z-[5000] hidden md:flex items-center gap-1 px-2 py-2 rounded-full",
+          "fixed top-6 z-[5000] hidden md:flex items-center gap-1 px-2 py-2 rounded-full",
           "bg-black/70 backdrop-blur-md border border-white/10",
           "shadow-lg shadow-black/20",
-          isScrolled && "shadow-xl shadow-black/30"
+          "left-1/2 -translate-x-1/2", // Centering
+          !isVisible && "pointer-events-none"
         )}
       >
         {/* Nav Items */}
@@ -118,15 +161,21 @@ export default function FloatingNav() {
         </Link>
       </motion.nav>
 
-      {/* Mobile Navigation */}
+      {/* Mobile Top Navigation */}
       <motion.nav
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, type: "spring", stiffness: 100, damping: 20 }}
+        style={{ 
+          opacity: smoothOpacity,
+          y: smoothY,
+        }}
         className={cn(
-          "fixed top-4 left-4 right-4 z-[5000] md:hidden",
+          "fixed top-4 z-[5000] md:hidden",
           "bg-black/70 backdrop-blur-md border border-white/10 rounded-2xl",
-          "shadow-lg shadow-black/20"
+          "shadow-lg shadow-black/20",
+          "left-4 right-4", // Full width with margins
+          !isVisible && "pointer-events-none"
         )}
       >
         {/* Mobile Header */}
@@ -202,16 +251,22 @@ export default function FloatingNav() {
         </AnimatePresence>
       </motion.nav>
 
-      {/* Compact Mobile Bottom Bar (Alternative - Icons Only) */}
+      {/* Mobile Bottom Bar - Centered */}
       <motion.nav
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.2, type: "spring", stiffness: 100, damping: 20 }}
+        style={{ 
+          opacity: smoothOpacity,
+          y: useSpring(useMotionValue(isVisible ? 0 : 20), { stiffness: 300, damping: 30 }),
+        }}
         className={cn(
-          "fixed bottom-4 left-1/2 -translate-x-1/2 z-[5000] md:hidden",
+          "fixed bottom-4 z-[5000] md:hidden",
           "flex items-center gap-1 px-2 py-2 rounded-full",
           "bg-black/80 backdrop-blur-md border border-white/10",
-          "shadow-lg shadow-black/30"
+          "shadow-lg shadow-black/30",
+          "left-1/2 -translate-x-1/2", // Centering
+          !isVisible && "pointer-events-none"
         )}
       >
         {navItems.map((item) => {
@@ -255,4 +310,3 @@ export default function FloatingNav() {
     </>
   );
 }
-
