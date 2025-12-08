@@ -16,6 +16,7 @@ import {
   Building2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 // Tech Stack Icons with colors
 const techStack = [
@@ -34,18 +35,21 @@ const services = [
     title: "Web Development",
     description: "High-performance Next.js applications",
     gradient: "from-cyan-500/20 via-transparent to-transparent",
+    href: "/services/web-development",
   },
   {
     id: "bots",
     title: "AI Bots",
     description: "Custom automation & chatbots",
     gradient: "from-purple-500/20 via-transparent to-transparent",
+    href: "#",
   },
   {
     id: "design",
     title: "UI/UX Design",
     description: "Modern, conversion-focused interfaces",
     gradient: "from-pink-500/20 via-transparent to-transparent",
+    href: "#",
   },
 ];
 
@@ -266,7 +270,7 @@ function TechStackCard() {
   );
 }
 
-// Services Card - Premium hover effect
+// Services Card - Premium hover effect with navigation
 function ServicesCard() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
@@ -276,70 +280,71 @@ function ServicesCard() {
 
       <div className="space-y-3">
         {services.map((service) => (
-          <motion.div
-            key={service.id}
-            onMouseEnter={() => setHoveredId(service.id)}
-            onMouseLeave={() => setHoveredId(null)}
-            className="relative flex items-center justify-between p-4 rounded-xl cursor-pointer overflow-hidden"
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
-          >
-            {/* Base background */}
-            <div className="absolute inset-0 rounded-xl bg-zinc-800/40" />
-            
-            {/* Gradient glow on hover */}
-            <motion.div 
-              className={cn(
-                "absolute inset-0 rounded-xl bg-gradient-to-r",
-                service.gradient
-              )}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: hoveredId === service.id ? 1 : 0 }}
-              transition={{ duration: 0.3 }}
-            />
-            
-            {/* Subtle border */}
-            <motion.div 
-              className="absolute inset-0 rounded-xl border"
-              initial={{ borderColor: "rgba(63, 63, 70, 0.5)" }}
-              animate={{ 
-                borderColor: hoveredId === service.id 
-                  ? "rgba(0, 245, 255, 0.3)" 
-                  : "rgba(63, 63, 70, 0.5)" 
-              }}
-              transition={{ duration: 0.3 }}
-            />
-            
-            {/* Content */}
-            <div className="relative z-10">
-              <motion.h4 
-                className="font-medium"
+          <Link key={service.id} href={service.href}>
+            <motion.div
+              onMouseEnter={() => setHoveredId(service.id)}
+              onMouseLeave={() => setHoveredId(null)}
+              className="relative flex items-center justify-between p-4 rounded-xl cursor-pointer overflow-hidden"
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+            >
+              {/* Base background */}
+              <div className="absolute inset-0 rounded-xl bg-zinc-800/40" />
+              
+              {/* Gradient glow on hover */}
+              <motion.div 
+                className={cn(
+                  "absolute inset-0 rounded-xl bg-gradient-to-r",
+                  service.gradient
+                )}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: hoveredId === service.id ? 1 : 0 }}
+                transition={{ duration: 0.3 }}
+              />
+              
+              {/* Subtle border */}
+              <motion.div 
+                className="absolute inset-0 rounded-xl border"
+                initial={{ borderColor: "rgba(63, 63, 70, 0.5)" }}
                 animate={{ 
-                  color: hoveredId === service.id ? "#00f5ff" : "#ffffff" 
+                  borderColor: hoveredId === service.id 
+                    ? "rgba(0, 245, 255, 0.3)" 
+                    : "rgba(63, 63, 70, 0.5)" 
+                }}
+                transition={{ duration: 0.3 }}
+              />
+              
+              {/* Content */}
+              <div className="relative z-10">
+                <motion.h4 
+                  className="font-medium"
+                  animate={{ 
+                    color: hoveredId === service.id ? "#00f5ff" : "#ffffff" 
+                  }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {service.title}
+                </motion.h4>
+                <p className="text-sm text-zinc-500">{service.description}</p>
+              </div>
+              
+              <motion.div
+                className="relative z-10"
+                animate={{ 
+                  x: hoveredId === service.id ? 4 : 0,
+                  y: hoveredId === service.id ? -4 : 0,
                 }}
                 transition={{ duration: 0.2 }}
               >
-                {service.title}
-              </motion.h4>
-              <p className="text-sm text-zinc-500">{service.description}</p>
-            </div>
-            
-            <motion.div
-              className="relative z-10"
-              animate={{ 
-                x: hoveredId === service.id ? 4 : 0,
-                y: hoveredId === service.id ? -4 : 0,
-              }}
-              transition={{ duration: 0.2 }}
-            >
-              <ArrowUpRight 
-                className={cn(
-                  "w-5 h-5 flex-shrink-0 transition-colors duration-200",
-                  hoveredId === service.id ? "text-cyan-400" : "text-zinc-600"
-                )}
-              />
+                <ArrowUpRight 
+                  className={cn(
+                    "w-5 h-5 flex-shrink-0 transition-colors duration-200",
+                    hoveredId === service.id ? "text-cyan-400" : "text-zinc-600"
+                  )}
+                />
+              </motion.div>
             </motion.div>
-          </motion.div>
+          </Link>
         ))}
       </div>
     </GlowCard>
