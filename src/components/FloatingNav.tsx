@@ -143,7 +143,7 @@ export default function FloatingNav() {
         <div className="w-px h-6 bg-white/10 mx-1" />
 
         {/* CTA Button */}
-        <Link href="/#contact">
+        <Link href="/hire-us">
           <motion.div
             className="relative px-5 py-2 rounded-full text-sm font-semibold overflow-hidden group"
             whileHover={{ scale: 1.05 }}
@@ -237,7 +237,7 @@ export default function FloatingNav() {
                 })}
 
                 {/* Mobile CTA */}
-                <Link href="/#contact">
+                <Link href="/hire-us">
                   <motion.div
                     className="flex items-center justify-center gap-2 px-4 py-3 mt-2 rounded-xl bg-gradient-to-r from-cyan-500 to-purple-500 text-white font-semibold"
                     whileTap={{ scale: 0.98 }}
@@ -297,7 +297,7 @@ export default function FloatingNav() {
         })}
 
         {/* CTA */}
-        <Link href="/#contact">
+        <Link href="/hire-us">
           <motion.div
             className="relative p-3 rounded-full bg-gradient-to-r from-cyan-500 to-purple-500"
             whileTap={{ scale: 0.9 }}
