@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import FloatingNav from "@/components/FloatingNav";
 
 const inter = Inter({
   variable: "--font-geist-sans",
@@ -46,6 +47,9 @@ export default function RootLayout({
         
         {/* Noise Texture Overlay */}
         <div className="noise-overlay" aria-hidden="true" />
+
+        {/* Floating Navigation */}
+        <FloatingNav />
         
         {/* Main Content */}
         <main className="relative z-10">
