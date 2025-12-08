@@ -49,7 +49,7 @@ const services = [
     title: "UI/UX Design",
     description: "Modern, conversion-focused interfaces",
     gradient: "from-pink-500/20 via-transparent to-transparent",
-    href: "#",
+    href: "/services/ui-ux-design",
   },
 ];
 
