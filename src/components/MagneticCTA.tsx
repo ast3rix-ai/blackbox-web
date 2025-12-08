@@ -110,7 +110,7 @@ export default function MagneticCTA() {
             transition={{ delay: 0.2 }}
             className="text-lg text-zinc-400 mb-12 max-w-xl mx-auto"
           >
-            Let's discuss your project and see how we can create something that
+            Let&apos;s discuss your project and see how we can create something that
             converts visitors into loyal customers.
           </motion.p>
 
@@ -175,7 +175,7 @@ export default function MagneticCTA() {
           ))}
         </div>
         <p className="text-zinc-500 text-sm italic mb-1">
-          "Scaling your vision, one pixel at a time."
+          &ldquo;Scaling your vision, one pixel at a time.&rdquo;
         </p>
         <p className="text-zinc-600 text-xs">
           © 2024 BLACKBOX. All rights reserved.

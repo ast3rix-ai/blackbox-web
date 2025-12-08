@@ -155,13 +155,14 @@ function GlowCard({
 }
 
 // About Card with animated tagline
+const TAGLINE_WORDS = ["grow", "scale", "innovate", "succeed"];
+
 function AboutCard() {
   const [wordIndex, setWordIndex] = useState(0);
-  const words = ["grow", "scale", "innovate", "succeed"];
   
   useEffect(() => {
     const interval = setInterval(() => {
-      setWordIndex((prev) => (prev + 1) % words.length);
+      setWordIndex((prev) => (prev + 1) % TAGLINE_WORDS.length);
     }, 2500);
     return () => clearInterval(interval);
   }, []);
@@ -227,7 +228,7 @@ function AboutCard() {
                 transition={{ duration: 0.25, ease: "easeOut" }}
                 className="text-cyan-400 font-medium"
               >
-                {words[wordIndex]}
+                {TAGLINE_WORDS[wordIndex]}
               </motion.span>
             </AnimatePresence>
           </p>

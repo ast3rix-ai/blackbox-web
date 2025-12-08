@@ -176,7 +176,7 @@ export default function BotShowcase() {
           The <span className="text-gradient">Bot Flex</span>
         </h2>
         <p className="text-zinc-500 max-w-lg mx-auto">
-          Interactive AI solutions that work 24/7. Here's a taste of what we can build.
+          Interactive AI solutions that work 24/7. Here&apos;s a taste of what we can build.
         </p>
       </motion.div>
 
