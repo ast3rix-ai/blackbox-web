@@ -176,7 +176,7 @@ function MockDashboardUI() {
       {/* Code Snippet Area */}
       <div className="p-4 rounded-xl bg-zinc-900 border border-zinc-800 font-mono text-sm">
         <div className="flex items-center gap-2 mb-3">
-          <span className="text-zinc-500">// Real-time analytics hook</span>
+          <span className="text-zinc-500">{"// Real-time analytics hook"}</span>
         </div>
         <div>
           <span className="text-purple-400">const</span>{" "}
