@@ -42,7 +42,7 @@ const services = [
     title: "AI Bots",
     description: "Custom automation & chatbots",
     gradient: "from-purple-500/20 via-transparent to-transparent",
-    href: "#",
+    href: "/services/ai-bots",
   },
   {
     id: "design",
