@@ -125,7 +125,7 @@ function GlowCard({
   return (
     <motion.div
       className={cn(
-        "relative rounded-2xl bg-zinc-900/50 border border-zinc-800/60 overflow-hidden group",
+        "relative rounded-2xl bg-zinc-900/90 border border-zinc-800/80 overflow-hidden group",
         className
       )}
       initial={{ opacity: 0, y: 20 }}
@@ -134,7 +134,8 @@ function GlowCard({
       transition={{ duration: 0.4, delay }}
       style={{ 
         transform: "translateZ(0)", // Force GPU layer
-        willChange: "transform",
+        backfaceVisibility: "hidden",
+        WebkitFontSmoothing: "antialiased",
       }}
     >
       {/* Hover overlay - uses opacity for GPU acceleration */}
@@ -278,7 +279,7 @@ function ServicesCard() {
     <GlowCard className="p-6 md:p-8 h-full" delay={0.3}>
       <h3 className="text-lg font-semibold mb-4 text-white">Services</h3>
 
-      <div className="space-y-3">
+      <div className="flex flex-col gap-4">
         {services.map((service) => (
           <Link key={service.id} href={service.href}>
             <motion.div

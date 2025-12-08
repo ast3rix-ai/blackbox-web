@@ -91,22 +91,22 @@ export default function FloatingNav() {
   return (
     <>
       {/* Desktop Navigation - Centered */}
-      <motion.nav
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, type: "spring", stiffness: 100, damping: 20 }}
-        style={{ 
-          opacity: smoothOpacity,
-          y: smoothY,
-        }}
-        className={cn(
-          "fixed top-6 z-[5000] hidden md:flex items-center gap-1 px-2 py-2 rounded-full",
-          "bg-black/70 backdrop-blur-md border border-white/10",
-          "shadow-lg shadow-black/20",
-          "left-1/2 -translate-x-1/2", // Centering
-          !isVisible && "pointer-events-none"
-        )}
-      >
+      <div className="fixed top-6 z-[5000] hidden md:flex justify-center w-full pointer-events-none">
+        <motion.nav
+          initial={{ y: -100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6, type: "spring", stiffness: 100, damping: 20 }}
+          style={{ 
+            opacity: smoothOpacity,
+            y: smoothY,
+          }}
+          className={cn(
+            "flex items-center gap-1 px-2 py-2 rounded-full pointer-events-auto",
+            "bg-black/70 backdrop-blur-md border border-white/10",
+            "shadow-lg shadow-black/20",
+            !isVisible && "pointer-events-none"
+          )}
+        >
         {/* Nav Items */}
         {navItems.map((item) => {
           const isActive = pathname === item.href;
@@ -159,7 +159,8 @@ export default function FloatingNav() {
             </span>
           </motion.div>
         </Link>
-      </motion.nav>
+        </motion.nav>
+      </div>
 
       {/* Mobile Top Navigation */}
       <motion.nav
@@ -252,23 +253,21 @@ export default function FloatingNav() {
       </motion.nav>
 
       {/* Mobile Bottom Bar - Centered */}
-      <motion.nav
-        initial={{ y: 100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.2, type: "spring", stiffness: 100, damping: 20 }}
-        style={{ 
-          opacity: smoothOpacity,
-          y: useSpring(useMotionValue(isVisible ? 0 : 20), { stiffness: 300, damping: 30 }),
-        }}
-        className={cn(
-          "fixed bottom-4 z-[5000] md:hidden",
-          "flex items-center gap-1 px-2 py-2 rounded-full",
-          "bg-black/80 backdrop-blur-md border border-white/10",
-          "shadow-lg shadow-black/30",
-          "left-1/2 -translate-x-1/2", // Centering
-          !isVisible && "pointer-events-none"
-        )}
-      >
+      <div className="fixed bottom-4 z-[5000] md:hidden flex justify-center w-full pointer-events-none">
+        <motion.nav
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.2, type: "spring", stiffness: 100, damping: 20 }}
+          style={{ 
+            opacity: smoothOpacity,
+          }}
+          className={cn(
+            "flex items-center gap-1 px-2 py-2 rounded-full pointer-events-auto",
+            "bg-black/80 backdrop-blur-md border border-white/10",
+            "shadow-lg shadow-black/30",
+            !isVisible && "pointer-events-none"
+          )}
+        >
         {navItems.map((item) => {
           const isActive = pathname === item.href;
           return (
@@ -306,7 +305,8 @@ export default function FloatingNav() {
             <Sparkles className="w-5 h-5 text-white" />
           </motion.div>
         </Link>
-      </motion.nav>
+        </motion.nav>
+      </div>
     </>
   );
 }
