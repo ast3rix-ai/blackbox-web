@@ -15,6 +15,7 @@ import {
   Zap,
   Rocket,
   Send,
+  AlertCircle,
 } from "lucide-react";
 
 // Data Rain Background
@@ -221,29 +222,66 @@ export default function HireUsPage() {
     setFormState("submitting");
     setProgress(0);
 
-    // Simulate progress
+    // Progress animation
     const interval = setInterval(() => {
       setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          return 100;
+        if (prev >= 90) {
+          return prev;
         }
         return prev + 10;
       });
-    }, 150);
+    }, 200);
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1800));
-    
-    clearInterval(interval);
-    setProgress(100);
-    setFormState("success");
+    try {
+      // Send to API
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          company,
+          email,
+          missions: selectedMissions,
+          budget,
+          brief,
+        }),
+      });
 
-    // Reset after success
-    setTimeout(() => {
-      setFormState("idle");
-      setProgress(0);
-    }, 3000);
+      clearInterval(interval);
+
+      if (response.ok) {
+        setProgress(100);
+        setFormState("success");
+        
+        // Reset form after success
+        setTimeout(() => {
+          setFormState("idle");
+          setProgress(0);
+          setName("");
+          setCompany("");
+          setEmail("");
+          setSelectedMissions([]);
+          setBudget("");
+          setBrief("");
+        }, 3000);
+      } else {
+        setFormState("error");
+        setTimeout(() => {
+          setFormState("idle");
+          setProgress(0);
+        }, 3000);
+      }
+    } catch (error) {
+      console.error("Submission error:", error);
+      clearInterval(interval);
+      setFormState("error");
+      setTimeout(() => {
+        setFormState("idle");
+        setProgress(0);
+      }, 3000);
+    }
   };
 
   const inputClasses =
@@ -341,7 +379,7 @@ export default function HireUsPage() {
                     Book a 30-minute discovery call to discuss your project directly.
                   </p>
                   <a
-                    href="https://calendly.com/blackbox/discovery"
+                    href={process.env.NEXT_PUBLIC_CALENDLY_URL || "https://calendly.com/YOUR_USERNAME/discovery"}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 hover:text-purple-300 transition-all duration-300 text-sm font-medium"
@@ -477,7 +515,7 @@ export default function HireUsPage() {
                 {/* Submit Button */}
                 <motion.button
                   type="submit"
-                  disabled={formState === "submitting" || formState === "success"}
+                  disabled={formState === "submitting" || formState === "success" || formState === "error"}
                   className="relative w-full py-4 rounded-xl font-semibold text-white overflow-hidden disabled:cursor-not-allowed"
                   whileHover={formState === "idle" ? { scale: 1.02 } : {}}
                   whileTap={formState === "idle" ? { scale: 0.98 } : {}}
@@ -499,6 +537,16 @@ export default function HireUsPage() {
                   {formState === "success" && (
                     <motion.div
                       className="absolute inset-0 bg-emerald-500"
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  )}
+
+                  {/* Error overlay */}
+                  {formState === "error" && (
+                    <motion.div
+                      className="absolute inset-0 bg-red-500"
                       initial={{ scale: 0, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
                       transition={{ duration: 0.3 }}
@@ -546,6 +594,18 @@ export default function HireUsPage() {
                         >
                           <Check className="w-5 h-5" />
                           Signal Received
+                        </motion.span>
+                      )}
+                      {formState === "error" && (
+                        <motion.span
+                          key="error"
+                          initial={{ opacity: 0, scale: 0.5 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0 }}
+                          className="flex items-center gap-2"
+                        >
+                          <AlertCircle className="w-5 h-5" />
+                          Transmission Failed - Try Again
                         </motion.span>
                       )}
                     </AnimatePresence>
