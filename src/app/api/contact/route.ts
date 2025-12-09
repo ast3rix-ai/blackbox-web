@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
     console.log("Sending email to:", toEmail);
     
     const { data, error } = await resend.emails.send({
-      from: "BLACKBOX <hello@blckbox.studio>",
+      from: "BLACKBOX <project@blckbox.studio>",
       to: toEmail,
       replyTo: email,
       subject: `🚀 New Project Inquiry from ${name}`,

@@ -131,7 +131,7 @@ function MagneticButton({
 // Copy Email Component
 function CopyableEmail() {
   const [copied, setCopied] = useState(false);
-  const email = "hello@blckbox.studio";
+  const email = "project@blckbox.studio";
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(email);
