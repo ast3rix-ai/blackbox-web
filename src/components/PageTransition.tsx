@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 
@@ -28,54 +28,43 @@ export default function PageTransition({
   const prevPathRef = useRef(pathname);
 
   useEffect(() => {
-    const prevIndex = getPageIndex(prevPathRef.current);
-    const currentIndex = getPageIndex(pathname);
-    
-    // Determine direction: 1 = forward (slide left), -1 = backward (slide right)
-    if (currentIndex > prevIndex) {
-      setDirection(1);
-    } else if (currentIndex < prevIndex) {
-      setDirection(-1);
-    } else {
-      setDirection(0);
+    if (prevPathRef.current !== pathname) {
+      const prevIndex = getPageIndex(prevPathRef.current);
+      const currentIndex = getPageIndex(pathname);
+      
+      // Determine direction: 1 = forward (slide left), -1 = backward (slide right)
+      if (currentIndex > prevIndex) {
+        setDirection(1);
+      } else if (currentIndex < prevIndex) {
+        setDirection(-1);
+      } else {
+        setDirection(0);
+      }
+      
+      prevPathRef.current = pathname;
     }
-    
-    prevPathRef.current = pathname;
   }, [pathname]);
 
-  const variants = {
-    initial: (direction: number) => ({
-      x: direction === 0 ? 0 : direction > 0 ? "100%" : "-100%",
-      opacity: 0,
-    }),
-    animate: {
-      x: 0,
-      opacity: 1,
-    },
-    exit: (direction: number) => ({
-      x: direction === 0 ? 0 : direction > 0 ? "-100%" : "100%",
-      opacity: 0,
-    }),
-  };
-
   return (
-    <AnimatePresence mode="wait" initial={false} custom={direction}>
-      <motion.div
-        key={pathname}
-        custom={direction}
-        variants={variants}
-        initial="initial"
-        animate="animate"
-        exit="exit"
-        transition={{
-          x: { type: "spring", stiffness: 300, damping: 30 },
-          opacity: { duration: 0.2 },
-        }}
-        className="min-h-screen"
-      >
-        {children}
-      </motion.div>
-    </AnimatePresence>
+    <motion.div
+      key={pathname}
+      initial={{ 
+        x: direction === 0 ? 0 : direction > 0 ? 300 : -300,
+        opacity: 0 
+      }}
+      animate={{ 
+        x: 0,
+        opacity: 1 
+      }}
+      transition={{
+        type: "spring",
+        stiffness: 260,
+        damping: 26,
+      }}
+      className="min-h-screen"
+    >
+      {children}
+    </motion.div>
   );
 }
 
