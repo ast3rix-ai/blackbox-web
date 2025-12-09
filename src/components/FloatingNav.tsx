@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Code, Bot, Palette, Sparkles, Menu, X } from "lucide-react";
+import { Home, Code, Bot, Palette, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 // Navigation items
@@ -33,7 +33,6 @@ const navItems = [
 
 export default function FloatingNav() {
   const pathname = usePathname();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const lastScrollY = useRef(0);
   const ticking = useRef(false);
@@ -82,11 +81,6 @@ export default function FloatingNav() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [opacity, y]);
-
-  // Close mobile menu on route change
-  useEffect(() => {
-    setIsMobileMenuOpen(false);
-  }, [pathname]);
 
   return (
     <>
@@ -161,96 +155,6 @@ export default function FloatingNav() {
         </Link>
         </motion.nav>
       </div>
-
-      {/* Mobile Top Navigation */}
-      <motion.nav
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, type: "spring", stiffness: 100, damping: 20 }}
-        style={{ 
-          opacity: smoothOpacity,
-          y: smoothY,
-        }}
-        className={cn(
-          "fixed top-4 z-[5000] md:hidden",
-          "bg-black/70 backdrop-blur-md border border-white/10 rounded-2xl",
-          "shadow-lg shadow-black/20",
-          "left-4 right-4", // Full width with margins
-          !isVisible && "pointer-events-none"
-        )}
-      >
-        {/* Mobile Header */}
-        <div className="flex items-center justify-between px-4 py-3">
-          {/* Logo */}
-          <Link href="/" className="text-white font-bold text-lg">
-            BLACKBOX
-          </Link>
-
-          {/* Menu Toggle */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-2 rounded-lg hover:bg-white/10 transition-colors"
-          >
-            {isMobileMenuOpen ? (
-              <X className="w-5 h-5 text-white" />
-            ) : (
-              <Menu className="w-5 h-5 text-white" />
-            )}
-          </button>
-        </div>
-
-        {/* Mobile Menu Dropdown */}
-        <AnimatePresence>
-          {isMobileMenuOpen && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="overflow-hidden border-t border-white/10"
-            >
-              <div className="px-4 py-3 space-y-1">
-                {navItems.map((item) => {
-                  const isActive = pathname === item.href;
-                  return (
-                    <Link key={item.href} href={item.href}>
-                      <motion.div
-                        className={cn(
-                          "relative flex items-center gap-3 px-4 py-3 rounded-xl transition-colors",
-                          isActive
-                            ? "bg-white/10 text-white"
-                            : "text-zinc-400 hover:text-white hover:bg-white/5"
-                        )}
-                        whileTap={{ scale: 0.98 }}
-                      >
-                        <item.icon className="w-5 h-5" />
-                        <span className="font-medium">{item.label}</span>
-                        {isActive && (
-                          <motion.div
-                            layoutId="mobile-active"
-                            className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-cyan-400 rounded-r-full"
-                          />
-                        )}
-                      </motion.div>
-                    </Link>
-                  );
-                })}
-
-                {/* Mobile CTA */}
-                <Link href="/hire-us">
-                  <motion.div
-                    className="flex items-center justify-center gap-2 px-4 py-3 mt-2 rounded-xl bg-gradient-to-r from-cyan-500 to-purple-500 text-white font-semibold"
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <Sparkles className="w-5 h-5" />
-                    Hire Us
-                  </motion.div>
-                </Link>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.nav>
 
       {/* Mobile Bottom Bar - Centered */}
       <div className="fixed bottom-4 z-[5000] md:hidden flex justify-center w-full pointer-events-none">
