@@ -31,11 +31,23 @@ export async function POST(request: NextRequest) {
     const missionsList = missions?.length > 0 ? missions.join(", ") : "Not specified";
 
     // Send email using Resend
+    const toEmail = process.env.CONTACT_EMAIL;
+    
+    if (!toEmail) {
+      console.error("CONTACT_EMAIL is not configured");
+      return NextResponse.json(
+        { error: "Contact email not configured" },
+        { status: 500 }
+      );
+    }
+
+    console.log("Sending email to:", toEmail);
+    
     const { data, error } = await resend.emails.send({
-      from: "BLACKBOX Contact <onboarding@resend.dev>", // Change this to your verified domain
-      to: process.env.CONTACT_EMAIL || "hello@blckbox.studio", // Your email address
+      from: "BLACKBOX <onboarding@resend.dev>",
+      to: toEmail,
       replyTo: email,
-      subject: `🚀 New Project Inquiry from ${name}`,
+      subject: `New Project Inquiry from ${name}`,
       html: `
         <!DOCTYPE html>
         <html>
@@ -127,21 +139,23 @@ export async function POST(request: NextRequest) {
     });
 
     if (error) {
-      console.error("Resend error:", error);
+      console.error("Resend error:", JSON.stringify(error, null, 2));
       return NextResponse.json(
-        { error: "Failed to send email" },
+        { error: "Failed to send email", details: error.message },
         { status: 500 }
       );
     }
 
+    console.log("Email sent successfully:", data?.id);
+    
     return NextResponse.json(
       { success: true, messageId: data?.id },
       { status: 200 }
     );
   } catch (error) {
-    console.error("API error:", error);
+    console.error("API error:", error instanceof Error ? error.message : error);
     return NextResponse.json(
-      { error: "Internal server error" },
+      { error: "Internal server error", details: error instanceof Error ? error.message : "Unknown error" },
       { status: 500 }
     );
   }
