@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import FloatingNav from "@/components/FloatingNav";
+import PageTransition from "@/components/PageTransition";
 
 const inter = Inter({
   variable: "--font-geist-sans",
@@ -158,9 +159,11 @@ export default function RootLayout({
         {/* Floating Navigation */}
         <FloatingNav />
         
-        {/* Main Content */}
-        <main className="relative z-10">
-          {children}
+        {/* Main Content with Page Transitions */}
+        <main className="relative z-10 overflow-x-hidden">
+          <PageTransition>
+            {children}
+          </PageTransition>
         </main>
 
         {/* Vercel Analytics */}
