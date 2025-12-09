@@ -34,6 +34,7 @@ const navItems = [
 export default function FloatingNav() {
   const pathname = usePathname();
   const [isVisible, setIsVisible] = useState(true);
+  const [hasAnimated, setHasAnimated] = useState(false);
   const lastScrollY = useRef(0);
   const ticking = useRef(false);
 
@@ -44,6 +45,11 @@ export default function FloatingNav() {
   // Smooth Y position animation
   const y = useMotionValue(0);
   const smoothY = useSpring(y, { stiffness: 300, damping: 30 });
+
+  // Only animate on first mount
+  useEffect(() => {
+    setHasAnimated(true);
+  }, []);
 
   // Track scroll direction for hide/show
   useEffect(() => {
@@ -87,7 +93,7 @@ export default function FloatingNav() {
       {/* Desktop Navigation - Centered */}
       <div className="fixed top-6 z-[5000] hidden md:flex justify-center w-full pointer-events-none">
         <motion.nav
-          initial={{ y: -100, opacity: 0 }}
+          initial={hasAnimated ? false : { y: -100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, type: "spring", stiffness: 100, damping: 20 }}
           style={{ 
@@ -159,9 +165,9 @@ export default function FloatingNav() {
       {/* Mobile Bottom Bar - Centered */}
       <div className="fixed bottom-4 z-[5000] md:hidden flex justify-center w-full pointer-events-none">
         <motion.nav
-          initial={{ y: 100, opacity: 0 }}
+          initial={hasAnimated ? false : { y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.2, type: "spring", stiffness: 100, damping: 20 }}
+          transition={{ duration: 0.6, delay: hasAnimated ? 0 : 0.2, type: "spring", stiffness: 100, damping: 20 }}
           style={{ 
             opacity: smoothOpacity,
           }}
