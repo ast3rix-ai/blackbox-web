@@ -51,7 +51,7 @@ function NeuralNetworkBackground() {
           delay: 0.5,
         }}
       />
-      
+
       {/* Neural connection lines */}
       {[...Array(8)].map((_, i) => (
         <motion.div
@@ -82,7 +82,7 @@ function HeroSection() {
   return (
     <section className="relative min-h-[80vh] flex flex-col items-center justify-center px-6 py-20">
       <NeuralNetworkBackground />
-      
+
       <div className="relative z-10 max-w-4xl mx-auto text-center">
         {/* Back Link */}
         <motion.div
@@ -91,7 +91,7 @@ function HeroSection() {
           transition={{ duration: 0.5 }}
           className="mb-12"
         >
-          <Link 
+          <Link
             href="/"
             className="inline-flex items-center gap-2 text-zinc-500 hover:text-purple-400 transition-colors"
           >
@@ -132,7 +132,7 @@ function HeroSection() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed"
         >
-          We build custom AI agents that automate customer support, lead generation, 
+          We build custom AI agents that automate customer support, lead generation,
           and internal workflows with human-like precision.
         </motion.p>
       </div>
@@ -225,7 +225,7 @@ function ChatLogicDemo() {
                 }}
                 style={{ width: 120, height: 120, margin: -20 }}
               />
-              
+
               {/* Core */}
               <motion.div
                 className="w-20 h-20 rounded-full bg-gradient-to-br from-purple-600 to-cyan-500 flex items-center justify-center shadow-lg shadow-purple-500/30"
@@ -390,7 +390,7 @@ function CapabilitiesSection() {
             >
               {/* Glow effect on hover */}
               <div className={`absolute inset-0 rounded-2xl ${cap.bgColor} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
-              
+
               {/* Icon */}
               <div className={`relative w-14 h-14 rounded-xl ${cap.bgColor} flex items-center justify-center mb-6`}>
                 <cap.icon className={`w-7 h-7 ${cap.color}`} />
@@ -474,12 +474,12 @@ function CTASection() {
           ?
         </h2>
         <p className="text-lg text-zinc-400 mb-10 max-w-xl mx-auto">
-          Let&apos;s deploy an AI workforce that works 24/7, never takes breaks, 
+          Let&apos;s deploy an AI workforce that works 24/7, never takes breaks,
           and scales infinitely with your business.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
-            href="/#contact"
+            href="/hire-us"
             className="px-8 py-4 rounded-xl bg-gradient-to-r from-purple-600 to-cyan-500 text-white font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
           >
             <Bot className="w-5 h-5" />

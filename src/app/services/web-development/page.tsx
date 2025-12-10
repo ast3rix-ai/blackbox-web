@@ -24,7 +24,7 @@ function GridBeamBackground() {
           className="absolute top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-cyan-500/20 to-transparent"
           style={{ left: `${(i + 1) * 8}%` }}
           initial={{ opacity: 0, scaleY: 0 }}
-          animate={{ 
+          animate={{
             opacity: [0, 0.5, 0],
             scaleY: [0, 1, 0],
           }}
@@ -48,7 +48,7 @@ function HeroSection() {
   return (
     <section className="relative min-h-[80vh] flex flex-col items-center justify-center px-6 py-20">
       <GridBeamBackground />
-      
+
       <div className="relative z-10 max-w-4xl mx-auto text-center">
         {/* Back Link */}
         <motion.div
@@ -57,7 +57,7 @@ function HeroSection() {
           transition={{ duration: 0.5 }}
           className="mb-12"
         >
-          <Link 
+          <Link
             href="/"
             className="inline-flex items-center gap-2 text-zinc-500 hover:text-cyan-400 transition-colors"
           >
@@ -98,7 +98,7 @@ function HeroSection() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed"
         >
-          We don&apos;t just build websites. We build scalable, high-performance 
+          We don&apos;t just build websites. We build scalable, high-performance
           web applications that drive revenue.
         </motion.p>
       </div>
@@ -390,7 +390,7 @@ function CTASection() {
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
-            href="/#contact"
+            href="/hire-us"
             className="px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-purple-500 text-white font-semibold hover:opacity-90 transition-opacity"
           >
             Start a Project

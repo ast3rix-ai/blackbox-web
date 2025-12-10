@@ -82,7 +82,7 @@ function HeroSection() {
   return (
     <section className="relative min-h-[80vh] flex flex-col items-center justify-center px-6 py-20">
       <AuroraBackground />
-      
+
       <div className="relative z-10 max-w-4xl mx-auto text-center">
         {/* Back Link */}
         <motion.div
@@ -91,7 +91,7 @@ function HeroSection() {
           transition={{ duration: 0.5 }}
           className="mb-12"
         >
-          <Link 
+          <Link
             href="/"
             className="inline-flex items-center gap-2 text-zinc-500 hover:text-pink-400 transition-colors"
           >
@@ -132,7 +132,7 @@ function HeroSection() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed"
         >
-          We craft intuitive, motion-driven mobile apps and interfaces 
+          We craft intuitive, motion-driven mobile apps and interfaces
           that users actually want to touch.
         </motion.p>
       </div>
@@ -155,7 +155,7 @@ function MusicAppUI() {
       </div>
 
       {/* Album Art */}
-      <motion.div 
+      <motion.div
         className="flex-1 flex items-center justify-center mb-4"
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -175,7 +175,7 @@ function MusicAppUI() {
       {/* Progress Bar */}
       <div className="mb-4">
         <div className="h-1 bg-zinc-800 rounded-full overflow-hidden">
-          <motion.div 
+          <motion.div
             className="h-full bg-gradient-to-r from-pink-500 to-purple-500 rounded-full"
             initial={{ width: "0%" }}
             animate={{ width: "65%" }}
@@ -192,7 +192,7 @@ function MusicAppUI() {
       <div className="flex items-center justify-center gap-6">
         <Shuffle className="w-4 h-4 text-zinc-500" />
         <SkipBack className="w-5 h-5 text-zinc-300" />
-        <motion.div 
+        <motion.div
           className="w-12 h-12 rounded-full bg-white flex items-center justify-center"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
@@ -204,7 +204,7 @@ function MusicAppUI() {
       </div>
 
       {/* Like Button */}
-      <motion.div 
+      <motion.div
         className="flex justify-center mt-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -219,7 +219,7 @@ function MusicAppUI() {
 // 3D Phone Component
 function ThreeDPhone() {
   const containerRef = useRef<HTMLDivElement>(null);
-  
+
   // Motion values for mouse tracking
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -228,7 +228,7 @@ function ThreeDPhone() {
   const springConfig = { stiffness: 150, damping: 20, mass: 0.5 };
   const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [15, -15]), springConfig);
   const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-15, 15]), springConfig);
-  
+
   // Shadow offset (opposite direction)
   const shadowX = useSpring(useTransform(mouseX, [-0.5, 0.5], [30, -30]), springConfig);
   const shadowY = useSpring(useTransform(mouseY, [-0.5, 0.5], [-30, 30]), springConfig);
@@ -238,11 +238,11 @@ function ThreeDPhone() {
     const rect = containerRef.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
-    
+
     // Normalize to -0.5 to 0.5
     const normalizedX = (e.clientX - centerX) / rect.width;
     const normalizedY = (e.clientY - centerY) / rect.height;
-    
+
     mouseX.set(normalizedX);
     mouseY.set(normalizedY);
   };
@@ -298,7 +298,7 @@ function ThreeDPhone() {
             }}
           >
             {/* Phone Bezel */}
-            <div 
+            <div
               className="relative w-[280px] h-[580px] rounded-[3rem] p-3"
               style={{
                 background: "linear-gradient(145deg, #2a2a2a 0%, #1a1a1a 50%, #0a0a0a 100%)",
@@ -310,7 +310,7 @@ function ThreeDPhone() {
               }}
             >
               {/* Metallic Edge */}
-              <div 
+              <div
                 className="absolute inset-0 rounded-[3rem] pointer-events-none"
                 style={{
                   background: "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.03) 50%, transparent 100%)",
@@ -324,7 +324,7 @@ function ThreeDPhone() {
               </div>
 
               {/* Screen */}
-              <div 
+              <div
                 className="relative w-full h-full rounded-[2.25rem] overflow-hidden bg-black"
                 style={{
                   boxShadow: "inset 0 0 30px rgba(0,0,0,0.5)",
@@ -336,7 +336,7 @@ function ThreeDPhone() {
               {/* Side Button (Volume) */}
               <div className="absolute -left-1 top-28 w-1 h-8 bg-zinc-700 rounded-l-sm" />
               <div className="absolute -left-1 top-40 w-1 h-12 bg-zinc-700 rounded-l-sm" />
-              
+
               {/* Side Button (Power) */}
               <div className="absolute -right-1 top-32 w-1 h-16 bg-zinc-700 rounded-r-sm" />
             </div>
@@ -448,7 +448,7 @@ function DesignPhilosophy() {
             >
               {/* Glow effect on hover */}
               <div className={`absolute inset-0 rounded-2xl ${principle.bgColor} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
-              
+
               {/* Icon */}
               <div className={`relative w-14 h-14 rounded-xl ${principle.bgColor} flex items-center justify-center mb-6`}>
                 <principle.icon className={`w-7 h-7 ${principle.color}`} />
@@ -518,7 +518,7 @@ function CTASection() {
         {/* Floating palette */}
         <motion.div
           className="inline-block mb-6"
-          animate={{ 
+          animate={{
             rotate: [0, 5, -5, 0],
             y: [0, -5, 0],
           }}
@@ -535,12 +535,12 @@ function CTASection() {
           ?
         </h2>
         <p className="text-lg text-zinc-400 mb-10 max-w-xl mx-auto">
-          Let&apos;s turn your vision into a pixel-perfect reality. 
+          Let&apos;s turn your vision into a pixel-perfect reality.
           From wireframes to launch-ready designs.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
-            href="/#contact"
+            href="/hire-us"
             className="px-8 py-4 rounded-xl bg-gradient-to-r from-pink-600 to-purple-600 text-white font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
           >
             <Sparkles className="w-5 h-5" />

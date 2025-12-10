@@ -4,17 +4,18 @@ import { useRef, useState } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { ArrowRight, Calendar, Mail, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
-function MagneticButton({
+function MagneticLink({
   children,
   className,
-  onClick,
+  href,
 }: {
   children: React.ReactNode;
   className?: string;
-  onClick?: () => void;
+  href: string;
 }) {
-  const ref = useRef<HTMLButtonElement>(null);
+  const ref = useRef<HTMLAnchorElement>(null);
   const [isHovered, setIsHovered] = useState(false);
 
   const x = useMotionValue(0);
@@ -24,7 +25,7 @@ function MagneticButton({
   const springX = useSpring(x, springConfig);
   const springY = useSpring(y, springConfig);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (!ref.current) return;
     const rect = ref.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
@@ -43,20 +44,21 @@ function MagneticButton({
   };
 
   return (
-    <motion.button
-      ref={ref}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={handleMouseLeave}
-      onClick={onClick}
-      style={{ x: springX, y: springY }}
-      className={cn(
-        "relative group px-8 py-4 rounded-2xl font-semibold text-lg transition-all duration-300",
-        className
-      )}
-    >
-      {children}
-    </motion.button>
+    <Link href={href} passHref legacyBehavior>
+      <motion.a
+        ref={ref}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={handleMouseLeave}
+        style={{ x: springX, y: springY }}
+        className={cn(
+          "relative group px-8 py-4 rounded-2xl font-semibold text-lg transition-all duration-300 inline-block",
+          className
+        )}
+      >
+        {children}
+      </motion.a>
+    </Link>
   );
 }
 
@@ -122,21 +124,21 @@ export default function MagneticCTA() {
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
           >
             {/* Primary CTA - Magnetic */}
-            <MagneticButton className="bg-gradient-to-r from-cyan-500 to-purple-500 text-white shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40">
+            <MagneticLink href="/hire-us" className="bg-gradient-to-r from-cyan-500 to-purple-500 text-white shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40">
               <span className="flex items-center gap-2">
                 <Calendar className="w-5 h-5" />
                 Book a Call
                 <ArrowRight className="w-5 h-5" />
               </span>
-            </MagneticButton>
+            </MagneticLink>
 
             {/* Secondary CTA */}
-            <MagneticButton className="bg-transparent border border-zinc-700 text-white hover:border-zinc-500 hover:bg-zinc-800/50">
+            <MagneticLink href="/hire-us" className="bg-transparent border border-zinc-700 text-white hover:border-zinc-500 hover:bg-zinc-800/50">
               <span className="flex items-center gap-2">
                 <Mail className="w-5 h-5" />
                 Send Email
               </span>
-            </MagneticButton>
+            </MagneticLink>
           </motion.div>
 
           {/* Trust Signals */}
