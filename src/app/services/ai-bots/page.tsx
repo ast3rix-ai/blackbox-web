@@ -14,6 +14,7 @@ import {
   FileSearch,
   Sparkles,
 } from "lucide-react";
+import { useTranslation } from "@/hooks/useTranslation";
 
 // Neural Network Background Animation
 function NeuralNetworkBackground() {
@@ -79,6 +80,7 @@ function NeuralNetworkBackground() {
 
 // Hero Section
 function HeroSection() {
+  const { t } = useTranslation();
   return (
     <section className="relative min-h-[80vh] flex flex-col items-center justify-center px-6 py-20">
       <NeuralNetworkBackground />
@@ -96,7 +98,7 @@ function HeroSection() {
             className="inline-flex items-center gap-2 text-zinc-500 hover:text-purple-400 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span className="text-sm">Back to Home</span>
+            <span className="text-sm">{t('common.back_home')}</span>
           </Link>
         </motion.div>
 
@@ -108,7 +110,7 @@ function HeroSection() {
           className="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full border border-purple-500/30 bg-purple-500/5"
         >
           <Bot className="w-4 h-4 text-purple-400" />
-          <span className="text-sm text-purple-400">AI Bots</span>
+          <span className="text-sm text-purple-400">{t('ai.hero.badge')}</span>
         </motion.div>
 
         {/* Headline */}
@@ -118,10 +120,10 @@ function HeroSection() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight mb-6"
         >
-          <span className="text-white">Your 24/7</span>
+          <span className="text-white">{t('ai.hero.title.prefix')}</span>
           <br />
           <span className="bg-gradient-to-r from-purple-400 via-pink-500 to-cyan-400 bg-clip-text text-transparent">
-            Intelligent Workforce.
+            {t('ai.hero.title.highlight')}
           </span>
         </motion.h1>
 
@@ -132,8 +134,7 @@ function HeroSection() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed"
         >
-          We build custom AI agents that automate customer support, lead generation,
-          and internal workflows with human-like precision.
+          {t('ai.hero.description')}
         </motion.p>
       </div>
     </section>
@@ -142,6 +143,7 @@ function HeroSection() {
 
 // Chat Logic Demo Component
 function ChatLogicDemo() {
+  const { t } = useTranslation();
   const [animationKey, setAnimationKey] = useState(0);
   const controls = useAnimation();
 
@@ -164,10 +166,10 @@ function ChatLogicDemo() {
           viewport={{ once: true }}
         >
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            The <span className="text-purple-400">Logic Core</span>
+            {t('ai.demo.title.prefix')} <span className="text-purple-400">{t('ai.demo.title.highlight')}</span>
           </h2>
           <p className="text-zinc-500 max-w-lg mx-auto">
-            Watch how our AI processes and responds in milliseconds.
+            {t('ai.demo.description')}
           </p>
         </motion.div>
 
@@ -187,7 +189,7 @@ function ChatLogicDemo() {
                   <Users className="w-5 h-5 text-zinc-400" />
                 </div>
                 <div className="max-w-[200px] md:max-w-[280px] p-4 rounded-2xl rounded-tl-none bg-zinc-800 border border-zinc-700">
-                  <p className="text-sm text-zinc-300">&quot;How do I return an order?&quot;</p>
+                  <p className="text-sm text-zinc-300">&quot;{t('ai.demo.user_msg')}&quot;</p>
                 </div>
               </div>
             </motion.div>
@@ -248,7 +250,7 @@ function ChatLogicDemo() {
                 animate={{ opacity: [0, 1, 0] }}
                 transition={{ delay: 0.8, duration: 1.2 }}
               >
-                <span className="text-xs font-mono text-purple-400">Processing</span>
+                <span className="text-xs font-mono text-purple-400">{t('ai.demo.processing')}</span>
                 <motion.span
                   animate={{ opacity: [0, 1, 0] }}
                   transition={{ duration: 0.5, repeat: 3 }}
@@ -271,7 +273,7 @@ function ChatLogicDemo() {
                   <Bot className="w-5 h-5 text-white" />
                 </div>
                 <div className="max-w-[200px] md:max-w-[280px] p-4 rounded-2xl rounded-tr-none bg-purple-900/30 border border-purple-500/30">
-                  <p className="text-sm text-zinc-200">&quot;I can help with that! Here&apos;s your return label... 📦&quot;</p>
+                  <p className="text-sm text-zinc-200">&quot;{t('ai.demo.bot_msg')}&quot;</p>
                   <motion.div
                     className="mt-2 flex items-center gap-1 text-xs text-purple-400"
                     initial={{ opacity: 0 }}
@@ -279,7 +281,7 @@ function ChatLogicDemo() {
                     transition={{ delay: 2.5 }}
                   >
                     <Zap className="w-3 h-3" />
-                    <span>Response time: 120ms</span>
+                    <span>{t('ai.demo.response_time')}</span>
                   </motion.div>
                 </div>
               </div>
@@ -331,27 +333,28 @@ function ChatLogicDemo() {
 
 // Capabilities Section
 function CapabilitiesSection() {
+  const { t } = useTranslation();
   const capabilities = [
     {
       icon: MessageSquare,
-      title: "Customer Support",
-      description: "Resolve 80% of queries instantly without human intervention.",
+      title: t('ai.capabilities.support.title'),
+      description: t('ai.capabilities.support.desc'),
       color: "text-purple-400",
       bgColor: "bg-purple-500/10",
       borderColor: "border-purple-500/20",
     },
     {
       icon: Users,
-      title: "Lead Generation",
-      description: "Qualify leads and book appointments automatically while you sleep.",
+      title: t('ai.capabilities.lead.title'),
+      description: t('ai.capabilities.lead.desc'),
       color: "text-cyan-400",
       bgColor: "bg-cyan-500/10",
       borderColor: "border-cyan-500/20",
     },
     {
       icon: FileSearch,
-      title: "Data Extraction",
-      description: "Turn messy PDFs and emails into structured database entries.",
+      title: t('ai.capabilities.data.title'),
+      description: t('ai.capabilities.data.desc'),
       color: "text-pink-400",
       bgColor: "bg-pink-500/10",
       borderColor: "border-pink-500/20",
@@ -369,10 +372,10 @@ function CapabilitiesSection() {
           viewport={{ once: true }}
         >
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            What Our <span className="text-purple-400">Bots</span> Can Do
+            {t('ai.capabilities.title.prefix')} <span className="text-purple-400">{t('ai.capabilities.title.highlight')}</span> {t('ai.capabilities.title.suffix')}
           </h2>
           <p className="text-zinc-500 max-w-lg mx-auto">
-            Powerful automation capabilities that work around the clock.
+            {t('ai.capabilities.description')}
           </p>
         </motion.div>
 
@@ -449,6 +452,7 @@ function TechStackMarquee() {
 
 // CTA Section
 function CTASection() {
+  const { t } = useTranslation();
   return (
     <section className="px-6 py-32">
       <motion.div
@@ -467,15 +471,14 @@ function CTASection() {
         </motion.div>
 
         <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-          Ready to{" "}
+          {t('ai.cta.title.prefix')}{" "}
           <span className="bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
-            automate
+            {t('ai.cta.title.highlight')}
           </span>
-          ?
+          {t('ai.cta.title.suffix')}
         </h2>
         <p className="text-lg text-zinc-400 mb-10 max-w-xl mx-auto">
-          Let&apos;s deploy an AI workforce that works 24/7, never takes breaks,
-          and scales infinitely with your business.
+          {t('ai.cta.description')}
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
@@ -483,13 +486,13 @@ function CTASection() {
             className="px-8 py-4 rounded-xl bg-gradient-to-r from-purple-600 to-cyan-500 text-white font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
           >
             <Bot className="w-5 h-5" />
-            Deploy Your Bot
+            {t('ai.cta.button.deploy')}
           </Link>
           <Link
             href="/"
             className="px-8 py-4 rounded-xl border border-zinc-700 text-white font-semibold hover:bg-zinc-800 transition-colors"
           >
-            Back to Home
+            {t('ai.cta.button.back')}
           </Link>
         </div>
       </motion.div>

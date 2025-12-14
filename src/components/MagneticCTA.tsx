@@ -5,6 +5,7 @@ import { motion, useMotionValue, useSpring } from "framer-motion";
 import { ArrowRight, Calendar, Mail, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { useTranslation } from "@/hooks/useTranslation";
 
 function MagneticLink({
   children,
@@ -63,6 +64,7 @@ function MagneticLink({
 }
 
 export default function MagneticCTA() {
+  const { t } = useTranslation();
   return (
     <section className="px-6 pt-20 pb-10 max-w-7xl mx-auto">
       <motion.div
@@ -90,7 +92,7 @@ export default function MagneticCTA() {
             className="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full border border-neon-cyan/30 bg-neon-cyan/5"
           >
             <Sparkles className="w-4 h-4 text-neon-cyan" />
-            <span className="text-sm text-neon-cyan">Limited Availability</span>
+            <span className="text-sm text-neon-cyan">{t('cta.badge')}</span>
           </motion.div>
 
           <motion.h2
@@ -100,9 +102,9 @@ export default function MagneticCTA() {
             transition={{ delay: 0.1 }}
             className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
           >
-            Ready to Build
+            {t('cta.title.prefix')}
             <br />
-            <span className="text-gradient-shimmer">Something Epic?</span>
+            <span className="text-gradient-shimmer">{t('cta.title.highlight')}</span>
           </motion.h2>
 
           <motion.p
@@ -112,8 +114,7 @@ export default function MagneticCTA() {
             transition={{ delay: 0.2 }}
             className="text-lg text-zinc-400 mb-12 max-w-xl mx-auto"
           >
-            Let&apos;s discuss your project and see how we can create something that
-            converts visitors into loyal customers.
+            {t('cta.description')}
           </motion.p>
 
           <motion.div
@@ -127,7 +128,7 @@ export default function MagneticCTA() {
             <MagneticLink href="/hire-us" className="bg-gradient-to-r from-cyan-500 to-purple-500 text-white shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40">
               <span className="flex items-center gap-2">
                 <Calendar className="w-5 h-5" />
-                Book a Call
+                {t('cta.button.call')}
                 <ArrowRight className="w-5 h-5" />
               </span>
             </MagneticLink>
@@ -136,7 +137,7 @@ export default function MagneticCTA() {
             <MagneticLink href="/hire-us" className="bg-transparent border border-zinc-700 text-white hover:border-zinc-500 hover:bg-zinc-800/50">
               <span className="flex items-center gap-2">
                 <Mail className="w-5 h-5" />
-                Send Email
+                {t('cta.button.email')}
               </span>
             </MagneticLink>
           </motion.div>
@@ -149,7 +150,7 @@ export default function MagneticCTA() {
             transition={{ delay: 0.5 }}
             className="mt-12 flex flex-wrap justify-center gap-6 text-sm text-zinc-500"
           >
-            {["✓ Free Consultation", "✓ 48h Response", "✓ NDA Ready"].map(
+            {[t('cta.trust.1'), t('cta.trust.2'), t('cta.trust.3')].map(
               (item, index) => (
                 <span key={index}>{item}</span>
               )
@@ -177,10 +178,10 @@ export default function MagneticCTA() {
           ))}
         </div>
         <p className="text-zinc-500 text-sm italic mb-1">
-          &ldquo;Scaling your vision, one pixel at a time.&rdquo;
+          {t('cta.quote')}
         </p>
         <p className="text-zinc-600 text-xs">
-          © 2024 BLACKBOX. All rights reserved.
+          {t('cta.copyright')}
         </p>
       </motion.footer>
     </section>

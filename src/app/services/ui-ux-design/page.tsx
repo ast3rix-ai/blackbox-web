@@ -17,6 +17,7 @@ import {
   Shuffle,
   Repeat,
 } from "lucide-react";
+import { useTranslation } from "@/hooks/useTranslation";
 
 // Aurora Mesh Background
 function AuroraBackground() {
@@ -79,6 +80,7 @@ function AuroraBackground() {
 
 // Hero Section
 function HeroSection() {
+  const { t } = useTranslation();
   return (
     <section className="relative min-h-[80vh] flex flex-col items-center justify-center px-6 py-20">
       <AuroraBackground />
@@ -96,7 +98,7 @@ function HeroSection() {
             className="inline-flex items-center gap-2 text-zinc-500 hover:text-pink-400 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span className="text-sm">Back to Home</span>
+            <span className="text-sm">{t('common.back_home')}</span>
           </Link>
         </motion.div>
 
@@ -108,7 +110,7 @@ function HeroSection() {
           className="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full border border-pink-500/30 bg-pink-500/5"
         >
           <Palette className="w-4 h-4 text-pink-400" />
-          <span className="text-sm text-pink-400">UI/UX Design</span>
+          <span className="text-sm text-pink-400">{t('ui.hero.badge')}</span>
         </motion.div>
 
         {/* Headline */}
@@ -118,10 +120,10 @@ function HeroSection() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight mb-6"
         >
-          <span className="text-white">Designing</span>
+          <span className="text-white">{t('ui.hero.title.prefix')}</span>
           <br />
           <span className="bg-gradient-to-r from-pink-400 via-purple-500 to-cyan-400 bg-clip-text text-transparent">
-            Digital Instincts.
+            {t('ui.hero.title.highlight')}
           </span>
         </motion.h1>
 
@@ -132,8 +134,7 @@ function HeroSection() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed"
         >
-          We craft intuitive, motion-driven mobile apps and interfaces
-          that users actually want to touch.
+          {t('ui.hero.description')}
         </motion.p>
       </div>
     </section>
@@ -142,6 +143,7 @@ function HeroSection() {
 
 // Music App UI for Phone Screen
 function MusicAppUI() {
+  const { t } = useTranslation();
   return (
     <div className="h-full bg-gradient-to-b from-zinc-900 via-zinc-900 to-purple-950 p-4 flex flex-col">
       {/* Status Bar */}
@@ -168,8 +170,8 @@ function MusicAppUI() {
 
       {/* Track Info */}
       <div className="text-center mb-4">
-        <h3 className="text-white font-semibold text-sm">Midnight Dreams</h3>
-        <p className="text-zinc-500 text-xs">BLACKBOX Studio</p>
+        <h3 className="text-white font-semibold text-sm">{t('ui.app.song')}</h3>
+        <p className="text-zinc-500 text-xs">{t('ui.app.artist')}</p>
       </div>
 
       {/* Progress Bar */}
@@ -218,6 +220,7 @@ function MusicAppUI() {
 
 // 3D Phone Component
 function ThreeDPhone() {
+  const { t } = useTranslation();
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Motion values for mouse tracking
@@ -263,10 +266,10 @@ function ThreeDPhone() {
           viewport={{ once: true }}
         >
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Touch to <span className="text-pink-400">Believe</span>
+            {t('ui.showcase.title.prefix')} <span className="text-pink-400">{t('ui.showcase.title.highlight')}</span>
           </h2>
           <p className="text-zinc-500 max-w-lg mx-auto">
-            Move your cursor to interact with the design. Every pixel is intentional.
+            {t('ui.showcase.description')}
           </p>
         </motion.div>
 
@@ -364,7 +367,7 @@ function ThreeDPhone() {
             >
               <span className="flex items-center gap-1">
                 <Moon className="w-3 h-3" />
-                Dark Mode
+                {t('ui.showcase.dark_mode')}
               </span>
             </motion.div>
 
@@ -377,7 +380,7 @@ function ThreeDPhone() {
             >
               <span className="flex items-center gap-1">
                 <Hand className="w-3 h-3" />
-                Gestures
+                {t('ui.showcase.gestures')}
               </span>
             </motion.div>
           </motion.div>
@@ -389,27 +392,28 @@ function ThreeDPhone() {
 
 // Design Philosophy Section
 function DesignPhilosophy() {
+  const { t } = useTranslation();
   const principles = [
     {
       icon: Play,
-      title: "Motion-First",
-      description: "Animations aren't an afterthought. They are the interface.",
+      title: t('ui.philosophy.motion.title'),
+      description: t('ui.philosophy.motion.desc'),
       color: "text-pink-400",
       bgColor: "bg-pink-500/10",
       borderColor: "border-pink-500/20",
     },
     {
       icon: Moon,
-      title: "Dark Mode Native",
-      description: "Optimized for OLED screens and battery life.",
+      title: t('ui.philosophy.dark.title'),
+      description: t('ui.philosophy.dark.desc'),
       color: "text-purple-400",
       bgColor: "bg-purple-500/10",
       borderColor: "border-purple-500/20",
     },
     {
       icon: Hand,
-      title: "Thumb-Zone Architecture",
-      description: "Ergonomic layouts designed for actual human hands.",
+      title: t('ui.philosophy.thumb.title'),
+      description: t('ui.philosophy.thumb.desc'),
       color: "text-cyan-400",
       bgColor: "bg-cyan-500/10",
       borderColor: "border-cyan-500/20",
@@ -427,10 +431,10 @@ function DesignPhilosophy() {
           viewport={{ once: true }}
         >
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Design <span className="text-pink-400">Philosophy</span>
+            {t('ui.philosophy.title.prefix')} <span className="text-pink-400">{t('ui.philosophy.title.highlight')}</span>
           </h2>
           <p className="text-zinc-500 max-w-lg mx-auto">
-            Every pixel serves a purpose. Every animation tells a story.
+            {t('ui.philosophy.description')}
           </p>
         </motion.div>
 
@@ -507,6 +511,7 @@ function ToolStackMarquee() {
 
 // CTA Section
 function CTASection() {
+  const { t } = useTranslation();
   return (
     <section className="px-6 py-32">
       <motion.div
@@ -528,15 +533,14 @@ function CTASection() {
         </motion.div>
 
         <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-          Have an{" "}
+          {t('ui.cta.title.prefix')}{" "}
           <span className="bg-gradient-to-r from-pink-400 to-cyan-400 bg-clip-text text-transparent">
-            app idea
+            {t('ui.cta.title.highlight')}
           </span>
-          ?
+          {t('ui.cta.title.suffix')}
         </h2>
         <p className="text-lg text-zinc-400 mb-10 max-w-xl mx-auto">
-          Let&apos;s turn your vision into a pixel-perfect reality.
-          From wireframes to launch-ready designs.
+          {t('ui.cta.description')}
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
@@ -544,13 +548,13 @@ function CTASection() {
             className="px-8 py-4 rounded-xl bg-gradient-to-r from-pink-600 to-purple-600 text-white font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
           >
             <Sparkles className="w-5 h-5" />
-            Start Design Sprint
+            {t('ui.cta.button.start')}
           </Link>
           <Link
             href="/"
             className="px-8 py-4 rounded-xl border border-zinc-700 text-white font-semibold hover:bg-zinc-800 transition-colors"
           >
-            View Portfolio
+            {t('ui.cta.button.view')}
           </Link>
         </div>
       </motion.div>

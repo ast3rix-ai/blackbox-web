@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { Bot, Send, Sparkles, User } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface Message {
   id: number;
@@ -12,11 +13,7 @@ interface Message {
   isTyping?: boolean;
 }
 
-const botResponses = [
-  "How can we help you scale today?",
-  "We can automate workflows, build chatbots, or integrate AI into your products.",
-  "Let's discuss your project! 🚀",
-];
+
 
 function TypingIndicator() {
   return (
@@ -106,6 +103,7 @@ function MessageBubble({
 }
 
 export default function BotShowcase() {
+  const { t } = useTranslation();
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [messages, setMessages] = useState<Message[]>([]);
@@ -116,6 +114,12 @@ export default function BotShowcase() {
 
   // Auto-start bot conversation when in view
   useEffect(() => {
+    const botResponses = [
+      t('bot.chat.1'),
+      t('bot.chat.2'),
+      t('bot.chat.3'),
+    ];
+
     if (isInView && !isInitialized) {
       setIsInitialized(true);
       const timer = setTimeout(() => {
@@ -127,7 +131,7 @@ export default function BotShowcase() {
 
       return () => clearTimeout(timer);
     }
-  }, [isInView, isInitialized]);
+  }, [isInView, isInitialized, t]);
 
   // Scroll to bottom of chat container on new messages (not the page)
   useEffect(() => {
@@ -150,6 +154,11 @@ export default function BotShowcase() {
 
     // Simulate bot response
     setTimeout(() => {
+      const botResponses = [
+        t('bot.chat.1'),
+        t('bot.chat.2'),
+        t('bot.chat.3'),
+      ];
       const botMessage: Message = {
         id: messages.length + 2,
         type: "bot",
@@ -170,13 +179,13 @@ export default function BotShowcase() {
       >
         <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full border border-neon-purple/50 bg-neon-purple/10">
           <Sparkles className="w-4 h-4 text-neon-purple" />
-          <span className="text-sm text-neon-purple">AI Integration</span>
+          <span className="text-sm text-neon-purple">{t('bot.badge')}</span>
         </div>
         <h2 className="text-3xl md:text-4xl font-bold mb-4">
-          The <span className="text-gradient">Bot Flex</span>
+          {t('bot.prefix')} <span className="text-gradient">{t('bot.highlight')}</span>
         </h2>
         <p className="text-zinc-500 max-w-lg mx-auto">
-          Interactive AI solutions that work 24/7. Here&apos;s a taste of what we can build.
+          {t('bot.description')}
         </p>
       </motion.div>
 
@@ -197,8 +206,8 @@ export default function BotShowcase() {
               <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-neon-green border-2 border-zinc-900" />
             </div>
             <div>
-              <h3 className="font-semibold text-white">BLACKBOX AI</h3>
-              <p className="text-xs text-zinc-500">Always online • AI Powered</p>
+              <h3 className="font-semibold text-white">{t('bot.status.title')}</h3>
+              <p className="text-xs text-zinc-500">{t('bot.status.subtitle')}</p>
             </div>
           </div>
 
@@ -224,7 +233,7 @@ export default function BotShowcase() {
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSend()}
-                placeholder="Type a message..."
+                placeholder={t('bot.input.placeholder')}
                 className="flex-1 px-4 py-3 rounded-xl bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 focus:outline-none focus:border-neon-cyan/50 focus:ring-1 focus:ring-neon-cyan/20 transition-all"
               />
               <motion.button
@@ -242,9 +251,9 @@ export default function BotShowcase() {
         {/* Features */}
         <div className="grid grid-cols-3 gap-4 mt-6">
           {[
-            { label: "Response Time", value: "<100ms" },
-            { label: "Accuracy", value: "99.2%" },
-            { label: "Languages", value: "12+" },
+            { label: t('bot.stats.response'), value: "<100ms" },
+            { label: t('bot.stats.accuracy'), value: "99.2%" },
+            { label: t('bot.stats.languages'), value: "12+" },
           ].map((stat, index) => (
             <motion.div
               key={index}

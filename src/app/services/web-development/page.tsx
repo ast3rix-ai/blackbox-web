@@ -12,6 +12,7 @@ import {
   Workflow,
   Zap,
 } from "lucide-react";
+import { useTranslation } from "@/hooks/useTranslation";
 
 // Grid Beam Background Animation
 function GridBeamBackground() {
@@ -45,6 +46,7 @@ function GridBeamBackground() {
 
 // Hero Section
 function HeroSection() {
+  const { t } = useTranslation();
   return (
     <section className="relative min-h-[80vh] flex flex-col items-center justify-center px-6 py-20">
       <GridBeamBackground />
@@ -62,7 +64,7 @@ function HeroSection() {
             className="inline-flex items-center gap-2 text-zinc-500 hover:text-cyan-400 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span className="text-sm">Back to Home</span>
+            <span className="text-sm">{t('common.back_home')}</span>
           </Link>
         </motion.div>
 
@@ -74,7 +76,7 @@ function HeroSection() {
           className="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full border border-cyan-500/30 bg-cyan-500/5"
         >
           <Code2 className="w-4 h-4 text-cyan-400" />
-          <span className="text-sm text-cyan-400">Web Development</span>
+          <span className="text-sm text-cyan-400">{t('web.hero.badge')}</span>
         </motion.div>
 
         {/* Headline */}
@@ -84,10 +86,10 @@ function HeroSection() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight mb-6"
         >
-          <span className="text-white">Engineering</span>
+          <span className="text-white">{t('web.hero.title.prefix')}</span>
           <br />
           <span className="bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-            Digital Ecosystems.
+            {t('web.hero.title.highlight')}
           </span>
         </motion.h1>
 
@@ -98,8 +100,7 @@ function HeroSection() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed"
         >
-          We don&apos;t just build websites. We build scalable, high-performance
-          web applications that drive revenue.
+          {t('web.hero.description')}
         </motion.p>
       </div>
     </section>
@@ -108,6 +109,7 @@ function HeroSection() {
 
 // Browser Window Component
 function BrowserWindow({ children }: { children: React.ReactNode }) {
+  const { t } = useTranslation();
   return (
     <div className="rounded-xl overflow-hidden border border-zinc-800 bg-zinc-900/90 shadow-2xl shadow-black/50">
       {/* Browser Header */}
@@ -121,7 +123,7 @@ function BrowserWindow({ children }: { children: React.ReactNode }) {
         {/* URL Bar */}
         <div className="flex-1 mx-4">
           <div className="px-4 py-1.5 rounded-md bg-zinc-800 text-zinc-500 text-sm font-mono">
-            blackbox.studio/dashboard
+            {t('web.browser.url' as any)}
           </div>
         </div>
       </div>
@@ -135,6 +137,7 @@ function BrowserWindow({ children }: { children: React.ReactNode }) {
 
 // Mock Dashboard UI inside Browser
 function MockDashboardUI() {
+  const { t } = useTranslation();
   return (
     <div className="p-6 bg-zinc-950 min-h-[400px]">
       {/* Dashboard Header */}
@@ -147,17 +150,17 @@ function MockDashboardUI() {
           </div>
         </div>
         <div className="flex gap-2">
-          <div className="px-4 py-2 rounded-lg bg-zinc-800 text-zinc-400 text-sm">Settings</div>
-          <div className="px-4 py-2 rounded-lg bg-cyan-500 text-white text-sm">Deploy</div>
+          <div className="px-4 py-2 rounded-lg bg-zinc-800 text-zinc-400 text-sm">{t('web.browser.settings' as any)}</div>
+          <div className="px-4 py-2 rounded-lg bg-cyan-500 text-white text-sm">{t('web.browser.deploy' as any)}</div>
         </div>
       </div>
 
       {/* Stats Row */}
       <div className="grid grid-cols-3 gap-4 mb-6">
         {[
-          { label: "Revenue", value: "$124,500", change: "+12.5%" },
-          { label: "Users", value: "8,420", change: "+8.2%" },
-          { label: "Conversion", value: "3.24%", change: "+2.1%" },
+          { label: t('web.dashboard.revenue' as any), value: "$124,500", change: "+12.5%" },
+          { label: t('web.dashboard.users' as any), value: "8,420", change: "+8.2%" },
+          { label: t('web.dashboard.conversion' as any), value: "3.24%", change: "+2.1%" },
         ].map((stat, i) => (
           <motion.div
             key={i}
@@ -203,6 +206,7 @@ function MockDashboardUI() {
 
 // Parallax Browser Showcase Section
 function ParallaxShowcase() {
+  const { t } = useTranslation();
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -226,10 +230,10 @@ function ParallaxShowcase() {
           viewport={{ once: true }}
         >
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Built for <span className="text-cyan-400">Performance</span>
+            {t('web.showcase.title.prefix')} <span className="text-cyan-400">{t('web.showcase.title.highlight')}</span>
           </h2>
           <p className="text-zinc-500 max-w-lg mx-auto">
-            Every application we build is optimized for speed, scalability, and user experience.
+            {t('web.showcase.description')}
           </p>
         </motion.div>
 
@@ -256,25 +260,26 @@ function ParallaxShowcase() {
 
 // Process Section
 function ProcessSection() {
+  const { t } = useTranslation();
   const steps = [
     {
       number: "01",
-      title: "The Blueprint.",
-      description: "We don't guess. We architect. Before a single line of code is written, we map out scalable database structures and user flows.",
+      title: t('web.process.step1.title'),
+      description: t('web.process.step1.desc'),
       icon: Workflow,
       color: "text-cyan-400",
     },
     {
       number: "02",
-      title: "The Build.",
-      description: "Clean, modular code. Built with Next.js and TypeScript to ensure stability and zero-runtime errors.",
+      title: t('web.process.step2.title'),
+      description: t('web.process.step2.desc'),
       icon: Layers,
       color: "text-purple-400",
     },
     {
       number: "03",
-      title: "The Velocity.",
-      description: "Speed is a feature. We optimize Core Web Vitals to ensure sub-100ms interactions and perfect SEO scores.",
+      title: t('web.process.step3.title'),
+      description: t('web.process.step3.desc'),
       icon: Gauge,
       color: "text-pink-400",
     },
@@ -291,10 +296,10 @@ function ProcessSection() {
           viewport={{ once: true }}
         >
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Our <span className="text-gradient">Process</span>
+            {t('web.process.title.prefix')} <span className="text-gradient">{t('web.process.title.highlight')}</span>
           </h2>
           <p className="text-zinc-500 max-w-lg mx-auto">
-            A battle-tested methodology that delivers results.
+            {t('web.process.description')}
           </p>
         </motion.div>
 
@@ -373,6 +378,7 @@ function TechStackMarquee() {
 
 // CTA Section
 function CTASection() {
+  const { t } = useTranslation();
   return (
     <section className="px-6 py-32">
       <motion.div
@@ -382,24 +388,25 @@ function CTASection() {
         viewport={{ once: true }}
       >
         <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-          Ready to build something{" "}
-          <span className="text-gradient">exceptional</span>?
+          {t('web.cta.title.prefix')}{" "}
+          <span className="text-gradient">{t('web.cta.title.highlight')}</span>
+          {t('web.cta.title.suffix')}
         </h2>
         <p className="text-lg text-zinc-400 mb-10 max-w-xl mx-auto">
-          Let&apos;s discuss your project and create a web application that sets you apart.
+          {t('web.cta.description')}
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
             href="/hire-us"
             className="px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-purple-500 text-white font-semibold hover:opacity-90 transition-opacity"
           >
-            Start a Project
+            {t('web.cta.button.start')}
           </Link>
           <Link
             href="/"
             className="px-8 py-4 rounded-xl border border-zinc-700 text-white font-semibold hover:bg-zinc-800 transition-colors"
           >
-            View Our Work
+            {t('web.cta.button.view')}
           </Link>
         </div>
       </motion.div>

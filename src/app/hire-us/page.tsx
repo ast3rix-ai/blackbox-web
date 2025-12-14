@@ -17,6 +17,7 @@ import {
   Send,
   AlertCircle,
 } from "lucide-react";
+import { useTranslation } from "@/hooks/useTranslation";
 
 // Data Rain Background
 function DataRainBackground() {
@@ -32,7 +33,7 @@ function DataRainBackground() {
     <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
       {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-zinc-950 via-zinc-950/95 to-zinc-950" />
-      
+
       {/* Data rain columns */}
       {columns.map((left, i) => (
         <motion.div
@@ -65,11 +66,11 @@ function DataRainBackground() {
 
 // Mission type options
 const missionTypes = [
-  { id: "web-dev", label: "Web Dev", icon: "🌐" },
-  { id: "ai-bot", label: "AI Bot", icon: "🤖" },
-  { id: "mobile-app", label: "Mobile App", icon: "📱" },
-  { id: "ui-ux", label: "UI/UX", icon: "🎨" },
-  { id: "full-system", label: "Full System", icon: "⚡" },
+  { id: "web-dev", labelKey: "hire.mission.web", icon: "🌐" },
+  { id: "ai-bot", labelKey: "hire.mission.bot", icon: "🤖" },
+  { id: "mobile-app", labelKey: "hire.mission.app", icon: "📱" },
+  { id: "ui-ux", labelKey: "hire.mission.ui", icon: "🎨" },
+  { id: "full-system", labelKey: "hire.mission.system", icon: "⚡" },
 ];
 
 // Budget ranges
@@ -132,6 +133,7 @@ function MagneticButton({
 function CopyableEmail() {
   const [copied, setCopied] = useState(false);
   const email = "project@blckbox.studio";
+  const { t } = useTranslation();
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(email);
@@ -147,12 +149,12 @@ function CopyableEmail() {
       whileTap={{ scale: 0.98 }}
     >
       <div className="flex-1 text-left">
-        <p className="text-xs text-zinc-500 uppercase tracking-wider mb-1">Direct Line</p>
+        <p className="text-xs text-zinc-500 uppercase tracking-wider mb-1">{t('hire.email_label')}</p>
         <p className="text-xl md:text-2xl font-mono text-white group-hover:text-cyan-400 transition-colors">
           {email}
         </p>
       </div>
-      
+
       <div className="relative w-10 h-10 rounded-lg bg-zinc-700/50 flex items-center justify-center">
         <AnimatePresence mode="wait">
           {copied ? (
@@ -201,6 +203,7 @@ function CopyableEmail() {
 type FormState = "idle" | "submitting" | "success" | "error";
 
 export default function HireUsPage() {
+  const { t } = useTranslation();
   // Form state
   const [name, setName] = useState("");
   const [company, setCompany] = useState("");
@@ -254,7 +257,7 @@ export default function HireUsPage() {
       if (response.ok) {
         setProgress(100);
         setFormState("success");
-        
+
         // Reset form after success
         setTimeout(() => {
           setFormState("idle");
@@ -305,7 +308,7 @@ export default function HireUsPage() {
             className="inline-flex items-center gap-2 text-zinc-500 hover:text-cyan-400 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span className="text-sm">Back to Base</span>
+            <span className="text-sm">{t('hire.back_base')}</span>
           </Link>
         </motion.div>
 
@@ -326,20 +329,20 @@ export default function HireUsPage() {
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-500/30 bg-cyan-500/5"
             >
               <Zap className="w-4 h-4 text-cyan-400" />
-              <span className="text-sm text-cyan-400">Project Initiation Protocol</span>
+              <span className="text-sm text-cyan-400">{t('hire.badge')}</span>
             </motion.div>
 
             {/* Headline */}
             <div>
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-4">
-                <span className="text-white">Ready to</span>
+                <span className="text-white">{t('hire.title.prefix')}</span>
                 <br />
                 <span className="bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-                  Scale?
+                  {t('hire.title.highlight')}
                 </span>
               </h1>
               <p className="text-lg text-zinc-400 max-w-md">
-                Let&apos;s transform your vision into a high-performance digital reality.
+                {t('hire.description')}
               </p>
             </div>
 
@@ -348,7 +351,7 @@ export default function HireUsPage() {
 
             {/* Social Connections */}
             <div>
-              <p className="text-sm text-zinc-500 mb-4">Connect with us</p>
+              <p className="text-sm text-zinc-500 mb-4">{t('hire.connect')}</p>
               <div className="flex gap-3">
                 {socialLinks.map((social) => (
                   <MagneticButton
@@ -374,9 +377,9 @@ export default function HireUsPage() {
                   <Calendar className="w-6 h-6 text-purple-400" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-lg font-semibold text-white mb-1">Skip the form?</h3>
+                  <h3 className="text-lg font-semibold text-white mb-1">{t('hire.call.title')}</h3>
                   <p className="text-sm text-zinc-400 mb-4">
-                    Book a 30-minute discovery call to discuss your project directly.
+                    {t('hire.call.desc')}
                   </p>
                   <a
                     href={process.env.NEXT_PUBLIC_CALENDLY_URL || "https://calendly.com/YOUR_USERNAME/discovery"}
@@ -385,7 +388,7 @@ export default function HireUsPage() {
                     className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 hover:text-purple-300 transition-all duration-300 text-sm font-medium"
                   >
                     <Calendar className="w-4 h-4" />
-                    Book a Call
+                    {t('hire.call.button')}
                     <ArrowRight className="w-4 h-4" />
                   </a>
                 </div>
@@ -408,8 +411,8 @@ export default function HireUsPage() {
                   <Rocket className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold text-white">Mission Parameters</h2>
-                  <p className="text-sm text-zinc-500">Define your project scope</p>
+                  <h2 className="text-xl font-bold text-white">{t('hire.form.title')}</h2>
+                  <p className="text-sm text-zinc-500">{t('hire.form.subtitle')}</p>
                 </div>
               </div>
 
@@ -417,7 +420,7 @@ export default function HireUsPage() {
                 {/* Identity Fields */}
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm text-zinc-400 mb-2">Your Name</label>
+                    <label className="block text-sm text-zinc-400 mb-2">{t('hire.form.name')}</label>
                     <input
                       type="text"
                       value={name}
@@ -428,7 +431,7 @@ export default function HireUsPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm text-zinc-400 mb-2">Company</label>
+                    <label className="block text-sm text-zinc-400 mb-2">{t('hire.form.company')}</label>
                     <input
                       type="text"
                       value={company}
@@ -441,7 +444,7 @@ export default function HireUsPage() {
 
                 {/* Coordinates (Email) */}
                 <div>
-                  <label className="block text-sm text-zinc-400 mb-2">Coordinates (Email)</label>
+                  <label className="block text-sm text-zinc-400 mb-2">{t('hire.form.email')}</label>
                   <input
                     type="email"
                     value={email}
@@ -454,23 +457,22 @@ export default function HireUsPage() {
 
                 {/* Mission Type */}
                 <div>
-                  <label className="block text-sm text-zinc-400 mb-3">Mission Type</label>
+                  <label className="block text-sm text-zinc-400 mb-3">{t('hire.form.mission_type')}</label>
                   <div className="flex flex-wrap gap-2">
                     {missionTypes.map((mission) => (
                       <motion.button
                         key={mission.id}
                         type="button"
                         onClick={() => toggleMission(mission.id)}
-                        className={`px-4 py-2 rounded-xl border text-sm font-medium transition-all duration-300 ${
-                          selectedMissions.includes(mission.id)
+                        className={`px-4 py-2 rounded-xl border text-sm font-medium transition-all duration-300 ${selectedMissions.includes(mission.id)
                             ? "bg-cyan-500/20 border-cyan-500/50 text-cyan-400 shadow-lg shadow-cyan-500/20"
                             : "bg-zinc-800/50 border-zinc-700/50 text-zinc-400 hover:border-zinc-600"
-                        }`}
+                          }`}
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                       >
                         <span className="mr-2">{mission.icon}</span>
-                        {mission.label}
+                        {t(mission.labelKey as any)}
                       </motion.button>
                     ))}
                   </div>
@@ -478,18 +480,17 @@ export default function HireUsPage() {
 
                 {/* Budget Range */}
                 <div>
-                  <label className="block text-sm text-zinc-400 mb-3">Budget Range</label>
+                  <label className="block text-sm text-zinc-400 mb-3">{t('hire.form.budget')}</label>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                     {budgetRanges.map((range) => (
                       <motion.button
                         key={range.id}
                         type="button"
                         onClick={() => setBudget(range.value)}
-                        className={`px-3 py-2.5 rounded-xl border text-sm font-medium transition-all duration-300 ${
-                          budget === range.value
+                        className={`px-3 py-2.5 rounded-xl border text-sm font-medium transition-all duration-300 ${budget === range.value
                             ? "bg-purple-500/20 border-purple-500/50 text-purple-400"
                             : "bg-zinc-800/50 border-zinc-700/50 text-zinc-400 hover:border-zinc-600"
-                        }`}
+                          }`}
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                       >
@@ -501,11 +502,11 @@ export default function HireUsPage() {
 
                 {/* Brief */}
                 <div>
-                  <label className="block text-sm text-zinc-400 mb-2">Mission Brief</label>
+                  <label className="block text-sm text-zinc-400 mb-2">{t('hire.form.brief')}</label>
                   <textarea
                     value={brief}
                     onChange={(e) => setBrief(e.target.value)}
-                    placeholder="Tell us about your project, goals, and timeline..."
+                    placeholder={t('hire.form.brief_placeholder')}
                     rows={4}
                     className={`${inputClasses} resize-none`}
                     required
@@ -522,7 +523,7 @@ export default function HireUsPage() {
                 >
                   {/* Background gradient */}
                   <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-purple-500" />
-                  
+
                   {/* Progress bar overlay */}
                   {formState === "submitting" && (
                     <motion.div
@@ -565,7 +566,7 @@ export default function HireUsPage() {
                           className="flex items-center gap-2"
                         >
                           <Send className="w-5 h-5" />
-                          Initiate Project
+                          {t('hire.form.submit')}
                         </motion.span>
                       )}
                       {formState === "submitting" && (
@@ -581,7 +582,7 @@ export default function HireUsPage() {
                             animate={{ rotate: 360 }}
                             transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                           />
-                          Transmitting... {progress}%
+                          {t('hire.form.submitting')} {progress}%
                         </motion.span>
                       )}
                       {formState === "success" && (
@@ -593,7 +594,7 @@ export default function HireUsPage() {
                           className="flex items-center gap-2"
                         >
                           <Check className="w-5 h-5" />
-                          Signal Received
+                          {t('hire.form.success')}
                         </motion.span>
                       )}
                       {formState === "error" && (
@@ -605,7 +606,7 @@ export default function HireUsPage() {
                           className="flex items-center gap-2"
                         >
                           <AlertCircle className="w-5 h-5" />
-                          Transmission Failed - Try Again
+                          {t('hire.form.error')}
                         </motion.span>
                       )}
                     </AnimatePresence>
@@ -614,7 +615,7 @@ export default function HireUsPage() {
 
                 {/* Privacy note */}
                 <p className="text-xs text-zinc-500 text-center">
-                  Your data is encrypted and secure. We&apos;ll respond within 24 hours.
+                  {t('hire.form.privacy')}
                 </p>
               </div>
             </form>
@@ -624,4 +625,3 @@ export default function HireUsPage() {
     </div>
   );
 }
-

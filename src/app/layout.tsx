@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import FloatingNav from "@/components/FloatingNav";
 import PageTransition from "@/components/PageTransition";
+import { LanguageProvider } from "@/context/LanguageContext";
 
 const inter = Inter({
   variable: "--font-geist-sans",
@@ -150,24 +151,26 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased`}
       >
-        {/* Background Gradient Mesh */}
-        <div className="gradient-mesh" aria-hidden="true" />
-        
-        {/* Noise Texture Overlay */}
-        <div className="noise-overlay" aria-hidden="true" />
+        <LanguageProvider>
+          {/* Background Gradient Mesh */}
+          <div className="gradient-mesh" aria-hidden="true" />
 
-        {/* Floating Navigation */}
-        <FloatingNav />
-        
-        {/* Main Content with Page Transitions */}
-        <main className="relative z-10 overflow-x-hidden">
-          <PageTransition>
-            {children}
-          </PageTransition>
-        </main>
+          {/* Noise Texture Overlay */}
+          <div className="noise-overlay" aria-hidden="true" />
 
-        {/* Vercel Analytics */}
-        <Analytics />
+          {/* Floating Navigation */}
+          <FloatingNav />
+
+          {/* Main Content with Page Transitions */}
+          <main className="relative z-10 overflow-x-hidden">
+            <PageTransition>
+              {children}
+            </PageTransition>
+          </main>
+
+          {/* Vercel Analytics */}
+          <Analytics />
+        </LanguageProvider>
       </body>
     </html>
   );
